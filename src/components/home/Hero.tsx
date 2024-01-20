@@ -4,11 +4,21 @@ import {
   HeroGridImageThree,
   HeroGridImageTwo,
 } from "@/assets";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Stack,
+  Typography,
+  TypographyPropsVariantOverrides,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
-const ProductItemContent = ({ titleSize }: { titleSize?: string }) => {
+interface IProductItemContent {
+  titleSize?: string;
+}
+
+const ProductItemContent = ({ titleSize }: IProductItemContent) => {
   return (
     <Stack
       position={"absolute"}
@@ -16,6 +26,7 @@ const ProductItemContent = ({ titleSize }: { titleSize?: string }) => {
       width={"100%"}
       zIndex={"1"}
       padding={"1.5rem"}
+      spacing={"0.31re"}
     >
       <Typography variant="h6" color={"success.main"}>
         5 Items
@@ -33,54 +44,61 @@ const ProductItemContent = ({ titleSize }: { titleSize?: string }) => {
 const Hero = () => {
   return (
     <Box py={"5rem"}>
-      <Grid container>
+      <Grid container spacing={"1rem"}>
         <Grid item xs={12} md={5}>
-          <Box
-            bgcolor={"gray"}
-            height={"38.5rem"}
-            width={"28.5rem"}
-            position={"relative"}
-          >
+          <Box bgcolor={"grey.light"} height={"38.5rem"} position={"relative"}>
             <ProductItemContent titleSize="h2" />
             <Image
-              layout="fill"
+              fill
               src={HeroGridImageOne}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               alt=""
             />
           </Box>
         </Grid>
         <Grid container item xs={12} md={7} spacing={"1rem"}>
           <Grid item xs={12} md={12}>
-            <Box bgcolor={"gray"} height={"18.75rem"} position={"relative"}>
+            <Box
+              bgcolor={"grey.light"}
+              height={"18.75rem"}
+              position={"relative"}
+            >
               <ProductItemContent />
               <Image
-                layout="fill"
+                fill
                 src={HeroGridImageTwo}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 alt=""
               />
             </Box>
           </Grid>
           <Grid container item xs={12} md={12} spacing={"1rem"}>
             <Grid item xs={12} md={6}>
-              <Box bgcolor={"gray"} height={"18.75rem"} position={"relative"}>
+              <Box
+                bgcolor={"grey.light"}
+                height={"18.75rem"}
+                position={"relative"}
+              >
                 <ProductItemContent />
                 <Image
-                  layout="fill"
+                  fill
                   src={HeroGridImageThree}
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   alt=""
                 />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Box bgcolor={"gray"} height={"18.75rem"} position={"relative"}>
+              <Box
+                bgcolor={"grey.light"}
+                height={"18.75rem"}
+                position={"relative"}
+              >
                 <ProductItemContent />
                 <Image
-                  layout="fill"
+                  fill
                   src={HeroGridImageFour}
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   alt=""
                 />
               </Box>

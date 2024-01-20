@@ -23,7 +23,7 @@ export default function RootLayout({
         <ProviderRoot>
           <Banner />
           <Nav />
-          <Container maxWidth={"lg"}>{children}</Container>
+          {children}
           <Footer />
         </ProviderRoot>
       </body>

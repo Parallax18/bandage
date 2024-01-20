@@ -1,7 +1,7 @@
-import { IconProps, SvgIcon } from "@mui/material";
+import { IconProps, SvgIcon, SvgIconProps } from "@mui/material";
 import React from "react";
 
-const HeartIcon = (props: IconProps) => {
+const HeartIcon = (props: SvgIconProps) => {
   const customSizing = {
     small: "16px",
     large: "74px",

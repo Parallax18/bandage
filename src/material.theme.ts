@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
@@ -19,17 +19,34 @@ export const theme = createTheme({
     success: {
       main: "#2DC071",
     },
+    grey: {
+      light: "#fafafa",
+    },
     text: {
       primary: "#252B42",
       secondary: "#737373",
-      disabled: "#BDBDBD",
+      muted: "#BDBDBD",
     },
   },
   components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+          fontFamily: montserrat.style.fontFamily,
+          fontSize: "0.875rem",
+          fontStyle: "normal",
+          fontWeight: "700",
+          lineHeight: "1.5rem",
+          letterSpacing: "0.0125rem",
+        },
+      },
+    },
     MuiButton: {
       defaultProps: { disableRipple: true, disableElevation: true },
       styleOverrides: {
         root: {
+          fontFamily: montserrat.style.fontFamily,
           height: "3.25rem",
           padding: "0.9375rem 2.5rem",
           borderRadius: "0.3125rem",
@@ -58,13 +75,12 @@ export const theme = createTheme({
     fontWeightBold: 700,
     fontWeightMedium: 500,
     fontWeightRegular: 400,
-    fontFamily: montserrat.style.fontFamily,
-
-    h6: {
-      fontSize: "0.875rem",
+    allVariants: { fontFamily: montserrat.style.fontFamily },
+    small: {
+      fontSize: "0.75rem",
       fontStyle: "normal",
-      fontWeight: 700,
-      lineHeight: "1.5rem",
+      fontWeight: 400,
+      lineHeight: "1rem",
       letterSpacing: "0.0125rem",
     },
     h2: {
@@ -81,5 +97,58 @@ export const theme = createTheme({
       lineHeight: "2rem",
       letterSpacing: "0.00625rem",
     },
+    h4: {
+      fontSize: "1.25rem",
+      fontStyle: "normal",
+      fontWeight: 500,
+      lineHeight: "1.875rem",
+      letterSpacing: "0.0125rem",
+    },
+    h5: {
+      fontSize: "1rem",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "1.5rem",
+      letterSpacing: "0.00625rem",
+    },
+    h6: {
+      fontSize: "0.875rem",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "1.5rem",
+      letterSpacing: "0.0125rem",
+    },
+    body1: {
+      fontSize: "0.875rem",
+      fontStyle: "normal",
+      fontWeight: 500,
+      lineHeight: "1.25rem",
+      letterSpacing: "0.0125rem",
+    },
   },
 });
+
+declare module "@mui/material" {
+  interface TypographyVariants {
+    small: React.CSSProperties;
+  }
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    small?: React.CSSProperties;
+  }
+
+  interface Color {
+    light?: string;
+  }
+
+  interface TypeText {
+    muted?: "#BDBDBD";
+  }
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    small: true;
+  }
+}
