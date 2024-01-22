@@ -22,7 +22,7 @@ const FeaturedProductItem = ({
           alt={title}
           loading="lazy"
           fill
-          style={{ objectFit: "fill" }}
+          style={{ objectFit: "cover" }}
         />
       </Box>
       <Stack
@@ -39,6 +39,7 @@ const FeaturedProductItem = ({
           direction={"row"}
           spacing={"0.31rem"}
           justifyContent={"center"}
+          alignItems={"center"}
         >
           <Typography variant="h5" color={"text.muted"}>
             $16.48

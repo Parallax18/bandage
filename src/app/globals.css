@@ -9,3 +9,8 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+.ctabg {
+  background: url("../assets/images/cta-image.png") center/cover no-repeat;
+  height: 40rem;
+}

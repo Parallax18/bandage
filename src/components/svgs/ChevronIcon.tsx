@@ -4,7 +4,7 @@ import React from "react";
 const ChevronIcon = (props: IconProps) => {
   const customSizing = {
     small: "16px",
-    large: "74px",
+    large: "72px",
   };
   return (
     <SvgIcon

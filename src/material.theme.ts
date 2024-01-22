@@ -11,6 +11,7 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#23A6F0",
+      contrastText: "#fff",
     },
     secondary: {
       main: "#23856D",
@@ -22,13 +23,29 @@ export const theme = createTheme({
     grey: {
       light: "#fafafa",
     },
+    danger: {
+      main: "#E74040",
+      contrastText: "#fff",
+    },
     text: {
       primary: "#252B42",
       secondary: "#737373",
+      disabled: "#8EC2F2",
       muted: "#BDBDBD",
+      light: "#fff",
     },
   },
   components: {
+    MuiRating: {
+      styleOverrides: {
+        iconFilled: {
+          color: "#F3CD03",
+        },
+        iconEmpty: {
+          color: "#F3CD03",
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
@@ -70,11 +87,19 @@ export const theme = createTheme({
         },
       ],
     },
+    MuiSvgIcon: {
+      styleOverrides: {
+        fontSizeLarge: "72px",
+        fontSizeMedium: "16px",
+        fontSizeSmall: "12px",
+      },
+    },
   },
   typography: {
     fontWeightBold: 700,
     fontWeightMedium: 500,
     fontWeightRegular: 400,
+
     allVariants: { fontFamily: montserrat.style.fontFamily },
     small: {
       fontSize: "0.75rem",
@@ -82,6 +107,7 @@ export const theme = createTheme({
       fontWeight: 400,
       lineHeight: "1rem",
       letterSpacing: "0.0125rem",
+      fontFamily: montserrat.style.fontFamily,
     },
     h2: {
       fontSize: "2.5rem",
@@ -125,6 +151,13 @@ export const theme = createTheme({
       lineHeight: "1.25rem",
       letterSpacing: "0.0125rem",
     },
+    body2: {
+      fontSize: "0.875rem",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "1.25rem",
+      letterSpacing: "0.0125rem",
+    },
   },
 });
 
@@ -142,7 +175,16 @@ declare module "@mui/material" {
   }
 
   interface TypeText {
-    muted?: "#BDBDBD";
+    muted?: string;
+    light?: string;
+  }
+
+  interface Palette {
+    danger: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    danger?: PaletteOptions["primary"];
   }
 }
 

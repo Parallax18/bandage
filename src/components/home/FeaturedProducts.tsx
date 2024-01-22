@@ -7,7 +7,7 @@ import { FeaturedProduct } from "@/assets";
 
 const FeaturedProducts = () => {
   return (
-    <Box py={"5rem"}>
+    <Box py={"5rem"} sx={{ border: "1px solid red" }}>
       <Stack spacing={"0.62rem"}>
         <Typography
           variant={"h4"}
