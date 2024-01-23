@@ -1,25 +1,45 @@
-import { FeaturedProduct } from "@/assets";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { calculateDiscount } from "@/utils/calculate-discount";
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
-interface IFeaturedProductItem {
-  img: string;
-  title: string;
-  description: string;
+interface IFeaturedProductItem extends IProduct {
+  isCentered?: boolean;
 }
 
-const FeaturedProductItem = ({
-  img,
-  title,
-  description,
-}: IFeaturedProductItem) => {
+const FeaturedProductItem = (props: IFeaturedProductItem) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleClick = () => {
+    pathname.includes("products") &&
+      scroll.scrollTo(`/products/${props.id}`, {
+        duration: 100,
+        offset: -50,
+      });
+
+    setTimeout(
+      () => {
+        router.push(`/products/${props.id}`);
+      },
+      pathname.includes("products") ? 500 : 0
+    );
+  };
+
   return (
-    <Grid item xs={12} md={2.4}>
+    <ScrollLink
+      style={{ cursor: "pointer" }}
+      to={`/products/${props.id}`}
+      onClick={handleClick}
+      smooth
+      offset={-50}
+      duration={500}
+    >
       <Box position={"relative"} height={"14.875rem"}>
         <Image
-          src={FeaturedProduct}
-          alt={title}
+          src={props?.thumbnail}
+          alt={props?.title}
           loading="lazy"
           fill
           style={{ objectFit: "cover" }}
@@ -30,26 +50,36 @@ const FeaturedProductItem = ({
         height={"10.125rem"}
         padding={"1.56rem"}
         paddingBottom={"2.19rem"}
-        textAlign={"center"}
+        textAlign={props?.isCentered ? "center" : "left"}
+        bgcolor={"background.light"}
       >
-        <Typography variant="h5">{title}</Typography>
-        <Typography color={"text.secondary"}>English Department</Typography>
+        <Typography variant="h5">{props?.title}</Typography>
+        <Typography
+          color={"text.secondary"}
+          sx={{ textTransform: "capitalize" }}
+        >
+          {props?.category}
+        </Typography>
         <Stack
           paddingY={"0.31rem"}
           direction={"row"}
           spacing={"0.31rem"}
-          justifyContent={"center"}
+          justifyContent={props?.isCentered ? "center" : "flex-start"}
           alignItems={"center"}
         >
           <Typography variant="h5" color={"text.muted"}>
-            $16.48
+            ${props?.price}
           </Typography>
           <Typography variant="h5" color={"secondary.main"}>
-            $6.48
+            $
+            {calculateDiscount({
+              price: props?.price,
+              discountPercentage: props?.discountPercentage,
+            })}
           </Typography>
         </Stack>
       </Stack>
-    </Grid>
+    </ScrollLink>
   );
 };
 

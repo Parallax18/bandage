@@ -1,12 +1,10 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import NextImage, { StaticImageData } from "next/image";
-import { Box, CardHeader, Stack } from "@mui/material";
+import { StaticImageData } from "next/image";
+import { Box, Stack } from "@mui/material";
 import ClockIcon from "../svgs/ClockIcon";
 import AreaChartIcon from "../svgs/AreaChartIcon";
 import ChevronRight from "../svgs/ChevronRight";
@@ -72,13 +70,13 @@ const FeaturedPostItem = ({ Image }: IFeaturedPostItem) => {
         >
           <Stack direction={"row"} alignItems={"center"} spacing={"0.31rem"}>
             <ClockIcon fontSize="small" />
-            <Typography variant="small" color={"text-secondary"}>
+            <Typography variant="small" color={"text.secondary"}>
               22 April 2021
             </Typography>
           </Stack>
           <Stack direction={"row"} alignItems={"center"} spacing={"0.31rem"}>
             <AreaChartIcon fontSize="small" />
-            <Typography variant="small" color={"text-secondary"}>
+            <Typography variant="small" color={"text.secondary"}>
               10 comments
             </Typography>
           </Stack>

@@ -51,7 +51,7 @@ const Testimonials = () => {
               src={DesignerImage.src}
               sx={{ width: "5.625rem", height: "5.624rem" }}
             />
-            <Rating name="read-only" value={4} readOnly />
+            <Rating name="testimonial-rating" value={4} readOnly />
             <Typography
               textAlign={"center"}
               variant="h6"
@@ -61,12 +61,14 @@ const Testimonials = () => {
               your financial goal.
             </Typography>
             <Stack alignItems={"center"}>
-              <Typography fontWeight={700} component={Link}>
+              <Typography
+                fontWeight={700}
+                component={Link}
+                color={"primary.main"}
+              >
                 Regina Miles
               </Typography>
-              <Typography variant="h6" color={"text.primary"}>
-                Designer
-              </Typography>
+              <Typography variant="h6">Designer</Typography>
             </Stack>
           </Stack>
         </Box>

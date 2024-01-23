@@ -27,11 +27,18 @@ export const theme = createTheme({
       main: "#E74040",
       contrastText: "#fff",
     },
+    alert: {
+      main: "#E77C40",
+    },
     text: {
       primary: "#252B42",
       secondary: "#737373",
       disabled: "#8EC2F2",
       muted: "#BDBDBD",
+      light: "#fff",
+    },
+    background: {
+      dark: "#252B42",
       light: "#fff",
     },
   },
@@ -94,12 +101,18 @@ export const theme = createTheme({
         fontSizeSmall: "12px",
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: "#252B42",
+        },
+      },
+    },
   },
   typography: {
     fontWeightBold: 700,
     fontWeightMedium: 500,
     fontWeightRegular: 400,
-
     allVariants: { fontFamily: montserrat.style.fontFamily },
     small: {
       fontSize: "0.75rem",
@@ -179,12 +192,19 @@ declare module "@mui/material" {
     light?: string;
   }
 
+  interface TypeBackground {
+    light?: string;
+    dark?: string;
+  }
+
   interface Palette {
     danger: Palette["primary"];
+    alert: Palette["primary"];
   }
 
   interface PaletteOptions {
     danger?: PaletteOptions["primary"];
+    alert?: PaletteOptions["primary"];
   }
 }
 

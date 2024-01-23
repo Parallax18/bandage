@@ -16,7 +16,6 @@ const Banner = () => {
       display={"flex"}
       alignItems={"center"}
       bgcolor={"secondary.main"}
-      color={"secondary.contrastText"}
       justifyContent={"space-between"}
       mb={"0.75rem"}
     >
@@ -28,7 +27,9 @@ const Banner = () => {
           padding={"0.63rem"}
         >
           <PhoneIcon fontSize="small" />
-          <Typography variant="h6">(225) 555-0118</Typography>
+          <Typography variant="h6" color={"text.light"}>
+            (225) 555-0118
+          </Typography>
         </Box>
         <Box
           display={"flex"}
@@ -37,11 +38,13 @@ const Banner = () => {
           padding={"0.63rem"}
         >
           <EnvelopeIcon fontSize="small" />
-          <Typography variant="h6">michelle.rivera@example.com</Typography>
+          <Typography variant="h6" color={"text.light"}>
+            michelle.rivera@example.com
+          </Typography>
         </Box>
       </Box>
       <Box display={"flex"} alignItems={"center"} padding={"0.63rem"}>
-        <Typography variant="h6">
+        <Typography variant="h6" color={"text.light"}>
           Follow Us and get a chance to win 80% off
         </Typography>
       </Box>
@@ -51,7 +54,9 @@ const Banner = () => {
         padding={"0.63rem"}
         gap={"0.62rem"}
       >
-        <Typography variant="h6">Follow Us :</Typography>
+        <Typography variant="h6" color={"text.light"}>
+          Follow Us :
+        </Typography>
         <Stack direction="row" spacing={"0.65rem"}>
           <InstagramIcon fontSize="small" />
           <YoutubeIcon fontSize="small" />
