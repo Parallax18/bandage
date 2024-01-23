@@ -52,6 +52,7 @@ const FeaturedProducts = () => {
           ))
         )}
       </Grid>
+      {/* @ts-expect-error */}
       {(limit < productsData?.total || 100) && (
         <center>
           <Button

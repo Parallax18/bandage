@@ -14,6 +14,7 @@ const FeaturedProductItem = (props: IFeaturedProductItem) => {
   const pathname = usePathname();
   const handleClick = () => {
     pathname.includes("products") &&
+      // @ts-expect-error
       scroll.scrollTo(`/products/${props.id}`, {
         duration: 100,
         offset: -50,

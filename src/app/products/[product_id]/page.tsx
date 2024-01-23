@@ -21,6 +21,7 @@ const ProductDetail = () => {
           <ProductDisplay />
         </Container>
       </Box>
+      {/* todo: reuse component from featured products */}
       <Box bgcolor={"grey.light"} paddingY={"3rem"}>
         <Container maxWidth={"lg"}>
           <BestSellerProducts />
