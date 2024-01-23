@@ -4,18 +4,13 @@ import {
   HeroGridImageThree,
   HeroGridImageTwo,
 } from "@/assets";
-import {
-  Box,
-  Grid,
-  Stack,
-  Typography,
-  TypographyPropsVariantOverrides,
-} from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Variant } from "@mui/material/styles/createTypography";
 import Image from "next/image";
 import React from "react";
 
 interface IProductItemContent {
-  titleSize?: string;
+  titleSize?: Variant;
 }
 
 const ProductItemContent = ({ titleSize }: IProductItemContent) => {
