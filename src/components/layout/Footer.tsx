@@ -62,7 +62,7 @@ const Footer = () => {
           </Stack>
         </Box>
 
-        <Grid container paddingY={"3.12rem"}>
+        <Grid container paddingY={"3.12rem"} rowGap={{ spacing: "1.88rem" }}>
           {footerRoutes.map((item) => (
             <Grid item xs={12} md={2.25} key={item.groupLabel}>
               <Typography variant={"h5"} marginBottom={"1.25rem"}>

@@ -112,15 +112,6 @@ export default function NavBar(props: Props) {
       >
         <Banner />
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <HamburgerIcon />
-          </IconButton>
           <Box display={"flex"} alignItems={"center"} gap={"2.5rem"}>
             <Typography
               variant="h3"
@@ -142,7 +133,7 @@ export default function NavBar(props: Props) {
               ))}
             </Box>
           </Box>
-          <Box display={"flex"} alignItems={"center"}>
+          <Box display={{ xs: "none", md: "flex" }} alignItems={"center"}>
             <Box
               display={"flex"}
               alignItems={"center"}
@@ -192,6 +183,15 @@ export default function NavBar(props: Props) {
               </Box>
             </Box>
           </Box>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={handleDrawerToggle}
+            sx={{ display: { sm: "none" } }}
+          >
+            <HamburgerIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <nav>
