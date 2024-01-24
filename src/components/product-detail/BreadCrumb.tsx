@@ -4,7 +4,12 @@ import { ChevronRightIcon } from "../svgs";
 
 const BreadCrumb = () => {
   return (
-    <Stack py={"1.5rem"} direction={"row"} spacing={"0.94rem"}>
+    <Stack
+      py={"1.5rem"}
+      direction={"row"}
+      spacing={"0.94rem"}
+      justifyContent={{ xs: "center", md: "flex-start" }}
+    >
       <Link href={"/"} color={"text.primary"}>
         Home
       </Link>

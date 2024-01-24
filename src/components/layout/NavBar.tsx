@@ -29,6 +29,7 @@ import { CartInitialState } from "@/store/slices/cart";
 import WishListDrawer from "../wishlist/WishlistDrawer";
 import { WishlistInitialState } from "@/store/slices/wishlist";
 import { Collapse } from "@mui/material";
+import Nextlink from "next/link";
 
 interface Props {
   /**
@@ -192,6 +193,11 @@ export default function NavBar(props: Props) {
                 color={"text.secondary"}
                 textAlign={"center"}
                 onClick={handleDrawerToggle}
+                {...(item?.path && {
+                  component: Nextlink,
+                  href: item?.path,
+                  sx: { textDecoration: "none" },
+                })}
               >
                 {item.label}
               </Typography>
