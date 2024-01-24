@@ -49,14 +49,14 @@ const FeaturedProducts = () => {
         </Grid>
       )}
       {/* @ts-expect-error */}
-      {(limit < productsData?.total || 100) && (
+      {limit < productsData?.total && (
         <center>
           <Button
             variant="outlined"
             disabled={isLoading}
             onClick={() => setLimit((prev) => prev + 10)}
           >
-            {isLoading ? "LOADING..." : "LOAD MORE PRODUCTS"}
+            {isLoading ? "LOADING MORE..." : "LOAD MORE PRODUCTS"}
           </Button>
         </center>
       )}
