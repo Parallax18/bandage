@@ -22,7 +22,7 @@ export default function RootLayout({
       <body>
         <ProviderRoot>
           <NavBar />
-          <Box mt={"8rem"}>{children}</Box>
+          <Box mt={{ xs: "4rem", md: "8rem" }}>{children}</Box>
           <Footer />
         </ProviderRoot>
       </body>
