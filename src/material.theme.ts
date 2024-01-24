@@ -171,16 +171,26 @@ export const theme = createTheme({
       lineHeight: "1.25rem",
       letterSpacing: "0.0125rem",
     },
+    "mobile-menu": {
+      fontSize: "1.875rem",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "2.8125rem",
+      letterSpacing: "0.0125rem",
+      fontFamily: montserrat.style.fontFamily,
+    },
   },
 });
 
 declare module "@mui/material" {
   interface TypographyVariants {
     small: React.CSSProperties;
+    "mobile-menu": React.CSSProperties;
   }
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     small?: React.CSSProperties;
+    "mobile-menu"?: React.CSSProperties;
   }
 
   interface Color {
@@ -212,5 +222,6 @@ declare module "@mui/material" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     small: true;
+    "mobile-menu": true;
   }
 }

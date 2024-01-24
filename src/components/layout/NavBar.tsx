@@ -20,7 +20,7 @@ import {
   SearchIcon,
   UserIcon,
 } from "../svgs";
-import { Link } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import Banner from "./Banner";
 import CartDrawer from "../cart/CartDrawer";
 import { useDisclosure } from "@/utils/use-disclosure";
@@ -82,24 +82,6 @@ export default function NavBar(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Bandage
-      </Typography>
-      <Divider />
-      <List>
-        {routes.map((item) => (
-          <ListItem key={item.path} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -196,7 +178,26 @@ export default function NavBar(props: Props) {
         </Toolbar>
       </AppBar>
       <nav>
-        <Collapse in={mobileOpen}>{drawer}</Collapse>
+        <Collapse in={mobileOpen}>
+          <Stack
+            spacing={"1.88rem"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            width={"100vw"}
+          >
+            {routes.map((item) => (
+              <Typography
+                key={item.label}
+                variant="mobile-menu"
+                color={"text.secondary"}
+                textAlign={"center"}
+                onClick={handleDrawerToggle}
+              >
+                {item.label}
+              </Typography>
+            ))}
+          </Stack>
+        </Collapse>
       </nav>
       <CartDrawer isOpen={isOpen} onClose={onClose} />
       <WishListDrawer isOpen={wishlistIsOpen} onClose={closeWishlist} />
