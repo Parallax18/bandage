@@ -26,6 +26,8 @@ import CartDrawer from "../cart/CartDrawer";
 import { useDisclosure } from "@/utils/use-disclosure";
 import { useAppSelector } from "@/store";
 import { CartInitialState } from "@/store/slices/cart";
+import WishListDrawer from "../wishlist/WishlistDrawer";
+import { WishlistInitialState } from "@/store/slices/wishlist";
 
 interface Props {
   /**
@@ -67,9 +69,16 @@ const routes = [
 export default function NavBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isOpen, toggle, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: wishlistIsOpen,
+    onOpen: openWishlist,
+    onClose: closeWishlist,
+  } = useDisclosure();
   const cartState = useAppSelector((state) => state.cart as CartInitialState);
-
+  const wishListState = useAppSelector(
+    (state) => state.wishlist as WishlistInitialState
+  );
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -159,7 +168,7 @@ export default function NavBar(props: Props) {
                 gap={"0.31rem"}
                 height={"2.875rem"}
                 width={"3.5rem"}
-                onClick={toggle}
+                onClick={onOpen}
                 sx={{ cursor: "pointer" }}
               >
                 <CartIcon fontSize="small" />
@@ -174,10 +183,12 @@ export default function NavBar(props: Props) {
                 alignItems={"center"}
                 padding={"0.94rem"}
                 gap={"0.31rem"}
+                onClick={openWishlist}
+                sx={{ cursor: "pointer" }}
               >
                 <HeartIcon fontSize="small" />
                 <Typography variant="small" color={"primary.main"}>
-                  1
+                  {wishListState?.items.length}
                 </Typography>
               </Box>
             </Box>
@@ -205,6 +216,7 @@ export default function NavBar(props: Props) {
         </Drawer>
       </nav>
       <CartDrawer isOpen={isOpen} onClose={onClose} />
+      <WishListDrawer isOpen={wishlistIsOpen} onClose={closeWishlist} />
     </Box>
   );
 }

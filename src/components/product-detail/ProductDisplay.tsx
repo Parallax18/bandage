@@ -20,8 +20,9 @@ import EyeIcon from "../svgs/EyeIcon";
 import Image from "next/image";
 import { useGetSingleProductDetail } from "@/api-services/products";
 import { useParams } from "next/navigation";
-import { useAppDispatch } from "@/store";
-import { addToCart } from "@/store/slices/cart";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { CartInitialState, addToCart } from "@/store/slices/cart";
+import { WishlistInitialState, addToWishlist } from "@/store/slices/wishlist";
 
 const ProductDisplay = () => {
   const theme = useTheme();
@@ -30,6 +31,10 @@ const ProductDisplay = () => {
   const { data: singleProduct } = useGetSingleProductDetail({
     id: params?.product_id,
   });
+  const cartState = useAppSelector((state) => state.cart as CartInitialState);
+  const wishListState = useAppSelector(
+    (state) => state.wishlist as WishlistInitialState
+  );
   const dispatch = useAppDispatch();
   const colors = [
     "primary.main",
@@ -49,11 +54,18 @@ const ProductDisplay = () => {
   const actions = [
     {
       icon: <WishlistIcon />,
-      onclick: () => {},
+      isDisabled: wishListState?.items.some(
+        (item) => item.id === singleProduct?.id
+      ),
+      onclick: (item: IProduct) => {
+        dispatch(addToWishlist(item));
+      },
     },
     {
       icon: <CartIcon />,
-      // todo: make unavailable when item exists in cart
+      isDisabled: cartState?.items.some(
+        (item) => item.id === singleProduct?.id
+      ),
       onclick: (item: IProduct) => {
         dispatch(addToCart({ ...item, count: 1 }));
       },
@@ -125,7 +137,7 @@ const ProductDisplay = () => {
               onClick={() => setActiveStep(idx)}
               sx={{ cursor: "pointer" }}
             >
-              <Image src={item} alt={""} fill />
+              <Image src={item} alt={""} style={{ objectFit: "cover" }} fill />
             </Box>
           ))}
         </Stack>
@@ -187,6 +199,7 @@ const ProductDisplay = () => {
                   border: "1px solid #E8E8E8",
                 }}
                 aria-label="add to wish list"
+                disabled={item?.isDisabled}
                 onClick={() => singleProduct && item.onclick(singleProduct)}
               >
                 {item.icon}

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -9,14 +9,19 @@ import { FeaturedPostImageOne } from "@/assets";
 import SubtractIcon from "../svgs/SubtractIcon";
 import { AdditionIcon } from "../svgs";
 import { useAppDispatch, useAppSelector } from "@/store";
-import cart, {
+import {
   CartInitialState,
   decreaseItemQuantity,
   increaseItemQuantity,
   removeFromCart,
 } from "@/store/slices/cart";
 
-export default function CartDrawer({ isOpen, onClose }) {
+interface ICartDrawer {
+  isOpen: boolean;
+  onClose: Dispatch<SetStateAction<boolean>>;
+}
+
+const CartDrawer = ({ isOpen, onClose }: ICartDrawer) => {
   const cartState = useAppSelector((state) => state.cart as CartInitialState);
   const dispatch = useAppDispatch();
   const list = () => (
@@ -45,7 +50,6 @@ export default function CartDrawer({ isOpen, onClose }) {
               >
                 <Stack>
                   <Typography>{item?.title}</Typography>
-                  <Typography>${item?.price}</Typography>
                 </Stack>
                 <Box
                   alignItems={"center"}
@@ -130,4 +134,6 @@ export default function CartDrawer({ isOpen, onClose }) {
       </Drawer>
     </div>
   );
-}
+};
+
+export default CartDrawer;

@@ -58,7 +58,7 @@ const FeaturedProducts = () => {
           <Button
             variant="outlined"
             disabled={isLoading}
-            onClick={() => setLimit((prev) => prev + 1)}
+            onClick={() => setLimit((prev) => prev + 10)}
           >
             {isLoading ? "LOADING..." : "LOAD MORE PRODUCTS"}
           </Button>
