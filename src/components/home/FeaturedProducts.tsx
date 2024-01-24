@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import FeaturedProductItem from "./FeaturedProductItem";
 import { useGetAllProducts } from "@/api-services/products";
 import { Skeleton } from "@mui/material";
+import LoadingGrid from "../util/LoadingGrid";
 
 const FeaturedProducts = () => {
   const [limit, setLimit] = useState(10);
@@ -30,28 +31,23 @@ const FeaturedProducts = () => {
           Problems trying to resolve the conflict between
         </Typography>
       </Stack>
-      <Grid
-        container
-        rowGap={"0.94rem"}
-        spacing={"1.88rem"}
-        padding={"1.5rem"}
-        my={"1.5rem"}
-      >
-        {isLoading ? (
-          <Skeleton
-            animation="wave"
-            variant="rectangular"
-            width={210}
-            height={118}
-          />
-        ) : (
-          productsData?.products?.map((item) => (
+      {isLoading && <LoadingGrid length={10} />}
+
+      {productsData && (
+        <Grid
+          container
+          rowGap={"0.94rem"}
+          spacing={"1.88rem"}
+          padding={"1.5rem"}
+          my={"1.5rem"}
+        >
+          {productsData?.products?.map((item) => (
             <Grid item xs={12} md={2.4} key={item.id}>
               <FeaturedProductItem {...item} isCentered />
             </Grid>
-          ))
-        )}
-      </Grid>
+          ))}
+        </Grid>
+      )}
       {/* @ts-expect-error */}
       {(limit < productsData?.total || 100) && (
         <center>

@@ -7,17 +7,8 @@ interface ICustomIconProps extends IconProps {
 }
 
 const ChevronRight = (props: ICustomIconProps) => {
-  const customSizing = {
-    small: "9px",
-    large: "72px",
-  };
   return (
-    <SvgIcon
-
-    // style={{
-    //   fontSize: customSizing[props.fontSize as keyof typeof customSizing],
-    // }}
-    >
+    <SvgIcon>
       <svg
         width="10"
         height="16"
