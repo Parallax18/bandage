@@ -63,7 +63,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
       },
     },
     {
-      icon: <CartIcon />,
+      icon: <CartIcon fill={"#252B42"} />,
       isDisabled: cartState?.items.some(
         (item) => item.id === singleProduct?.id
       ),
@@ -128,10 +128,10 @@ const ProductDisplay = (singleProduct: IProduct) => {
                 onClick={handleNext}
                 disabled={activeStep === singleProduct?.images?.length! - 1}
               >
-                <ChevronLeftIcon />
+                <ChevronLeftIcon fill={"#fff"} />
               </Button>
               <Button onClick={handleBack} disabled={activeStep === 0}>
-                <ChevronRightIcon />
+                <ChevronRightIcon fill={"#fff"} />
               </Button>
             </Box>
           </Box>

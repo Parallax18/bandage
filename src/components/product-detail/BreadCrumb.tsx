@@ -8,7 +8,7 @@ const BreadCrumb = () => {
       <Link href={"/"} color={"text.primary"}>
         Home
       </Link>
-      <ChevronRightIcon fontSize="small" />
+      <ChevronRightIcon fontSize="small" fill={"#BDBDBD"} />
       <Link color={"text.muted"}>Shop</Link>
     </Stack>
   );
