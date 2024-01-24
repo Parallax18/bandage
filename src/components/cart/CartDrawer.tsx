@@ -8,8 +8,17 @@ import Image from "next/image";
 import { FeaturedPostImageOne } from "@/assets";
 import SubtractIcon from "../svgs/SubtractIcon";
 import { AdditionIcon } from "../svgs";
+import { useAppDispatch, useAppSelector } from "@/store";
+import cart, {
+  CartInitialState,
+  decreaseItemQuantity,
+  increaseItemQuantity,
+  removeFromCart,
+} from "@/store/slices/cart";
 
 export default function CartDrawer({ isOpen, onClose }) {
+  const cartState = useAppSelector((state) => state.cart as CartInitialState);
+  const dispatch = useAppDispatch();
   const list = () => (
     <Box
       sx={{
@@ -19,27 +28,24 @@ export default function CartDrawer({ isOpen, onClose }) {
       }}
     >
       <List>
-        {[
-          "Inbox",
-          "Starred",
-          "Send email",
-          "Drafts",
-          "Inbox",
-          "Starred",
-          "Send email",
-          "Drafts",
-        ].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {cartState?.items.map((item, index) => (
+          <ListItem key={item?.id} disablePadding>
             <Box display={"flex"} width={"100%"} padding={"1rem"} gap={"1rem"}>
-              <Image src={FeaturedPostImageOne} width={70} height={80} alt="" />
+              <Image
+                src={item?.thumbnail}
+                style={{ objectFit: "cover" }}
+                width={70}
+                height={80}
+                alt=""
+              />
               <Stack
                 justifyContent={"space-between"}
                 width={"100%"}
                 spacing={1}
               >
                 <Stack>
-                  <Typography>{text}</Typography>
-                  <Typography>$9,00</Typography>
+                  <Typography>{item?.title}</Typography>
+                  <Typography>${item?.price}</Typography>
                 </Stack>
                 <Box
                   alignItems={"center"}
@@ -53,12 +59,17 @@ export default function CartDrawer({ isOpen, onClose }) {
                     display={"flex"}
                     alignItems={"center"}
                   >
-                    <IconButton>
+                    <IconButton
+                      disabled={item?.count === 1}
+                      onClick={() => dispatch(decreaseItemQuantity(item))}
+                    >
                       <SubtractIcon />
                     </IconButton>
 
-                    <Typography>4</Typography>
-                    <IconButton>
+                    <Typography>{item?.count}</Typography>
+                    <IconButton
+                      onClick={() => dispatch(increaseItemQuantity(item))}
+                    >
                       <AdditionIcon />
                     </IconButton>
                   </Stack>
@@ -70,6 +81,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                       padding: 0,
                       height: "max-content",
                     }}
+                    onClick={() => dispatch(removeFromCart(item))}
                   >
                     Remove
                   </Button>
@@ -89,7 +101,14 @@ export default function CartDrawer({ isOpen, onClose }) {
         <Typography variant="h3" padding={"1rem"}>
           Your Cart
         </Typography>
-        {list()}
+
+        {cartState.totalCount === 0 ? (
+          <Typography width={400} padding={"1rem"} variant="h4">
+            Cart is empty
+          </Typography>
+        ) : (
+          list()
+        )}
 
         <Stack
           padding={"1rem"}
@@ -101,8 +120,8 @@ export default function CartDrawer({ isOpen, onClose }) {
           bgcolor={"white"}
         >
           <Box display={"flex"} justifyContent={"space-between"}>
-            <Typography>Total 10 items</Typography>
-            <Typography>$900</Typography>
+            <Typography>Total : {cartState?.totalCount} items</Typography>
+            <Typography>${cartState?.totalPrice}</Typography>
           </Box>
           <Button variant="contained" fullWidth>
             Proceed to Checkout

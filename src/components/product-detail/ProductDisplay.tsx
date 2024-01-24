@@ -18,9 +18,10 @@ import WishlistIcon from "../svgs/WishlistIcon";
 import CartIcon from "../svgs/CartIcon";
 import EyeIcon from "../svgs/EyeIcon";
 import Image from "next/image";
-import { TestimonialImageEight } from "@/assets";
 import { useGetSingleProductDetail } from "@/api-services/products";
 import { useParams } from "next/navigation";
+import { useAppDispatch } from "@/store";
+import { addToCart } from "@/store/slices/cart";
 
 const ProductDisplay = () => {
   const theme = useTheme();
@@ -29,6 +30,7 @@ const ProductDisplay = () => {
   const { data: singleProduct } = useGetSingleProductDetail({
     id: params?.product_id,
   });
+  const dispatch = useAppDispatch();
   const colors = [
     "primary.main",
     "success.main",
@@ -51,7 +53,10 @@ const ProductDisplay = () => {
     },
     {
       icon: <CartIcon />,
-      onclick: () => {},
+      // todo: make unavailable when item exists in cart
+      onclick: (item: IProduct) => {
+        dispatch(addToCart({ ...item, count: 1 }));
+      },
     },
     {
       icon: <EyeIcon />,
@@ -182,6 +187,7 @@ const ProductDisplay = () => {
                   border: "1px solid #E8E8E8",
                 }}
                 aria-label="add to wish list"
+                onClick={() => singleProduct && item.onclick(singleProduct)}
               >
                 {item.icon}
               </IconButton>

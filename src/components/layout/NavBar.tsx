@@ -24,6 +24,8 @@ import { Link } from "@mui/material";
 import Banner from "./Banner";
 import CartDrawer from "../cart/CartDrawer";
 import { useDisclosure } from "@/utils/use-disclosure";
+import { useAppSelector } from "@/store";
+import { CartInitialState } from "@/store/slices/cart";
 
 interface Props {
   /**
@@ -66,6 +68,7 @@ export default function NavBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isOpen, toggle, onClose } = useDisclosure();
+  const cartState = useAppSelector((state) => state.cart as CartInitialState);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -161,7 +164,7 @@ export default function NavBar(props: Props) {
               >
                 <CartIcon fontSize="small" />
                 <Typography variant="small" color={"primary.main"}>
-                  1
+                  {cartState.totalCount}
                 </Typography>
               </Box>
 

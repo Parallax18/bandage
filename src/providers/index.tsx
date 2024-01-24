@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Materialprovider } from "./Material.provider";
+import StoreProvider from "./StoreProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,9 +18,11 @@ const queryClient = new QueryClient({
 const ProviderRoot = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Materialprovider>
-        <>{children}</>
-      </Materialprovider>
+      <StoreProvider>
+        <Materialprovider>
+          <>{children}</>
+        </Materialprovider>
+      </StoreProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

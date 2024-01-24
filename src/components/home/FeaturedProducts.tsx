@@ -7,7 +7,7 @@ import { useGetAllProducts } from "@/api-services/products";
 import { Skeleton } from "@mui/material";
 
 const FeaturedProducts = () => {
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(10);
   const { data: productsData, isLoading } = useGetAllProducts({ limit });
   return (
     <Box py={"5rem"} sx={{ border: "1px solid red" }}>
