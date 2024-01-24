@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ProviderRoot from "@/providers";
-import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import Banner from "@/components/layout/Banner";
-import { Container } from "@mui/material";
 import React from "react";
+import NavBar from "@/components/layout/NavBar";
+import { Box } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Bandage",
@@ -21,9 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ProviderRoot>
-          <Banner />
-          <Nav />
-          {children}
+          <NavBar />
+          <Box mt={"8rem"}>{children}</Box>
           <Footer />
         </ProviderRoot>
       </body>

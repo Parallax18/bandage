@@ -17,7 +17,6 @@ const Banner = () => {
       alignItems={"center"}
       bgcolor={"secondary.main"}
       justifyContent={"space-between"}
-      mb={"0.75rem"}
     >
       <Box display={"flex"} alignItems={"center"} gap={"1.25rem"}>
         <Box
