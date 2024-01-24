@@ -17,3 +17,4 @@ export { default as TestimonialImageSeven } from "./images/testimonial-image-7.p
 export { default as TestimonialImageEight } from "./images/testimonial-image-8.png";
 export { default as TestimonialImageNine } from "./images/testimonial-image-9.png";
 export { default as CtaImage } from "./images/cta-image.png";
+export { default as DescriptionImage } from "./images/description-image.png";

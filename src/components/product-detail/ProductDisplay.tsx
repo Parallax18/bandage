@@ -7,30 +7,31 @@ import {
   Rating,
   Stack,
   Typography,
+  Snackbar,
 } from "@mui/material";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material";
-import ChevronRight from "@/components/svgs/ChevronRight";
-import ChevronLeft from "@/components/svgs/ChevronLeft";
-import WishlistIcon from "../svgs/WishlistIcon";
-import CartIcon from "../svgs/CartIcon";
-import EyeIcon from "../svgs/EyeIcon";
+import {
+  WishlistIcon,
+  CartIcon,
+  EyeIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@/components/svgs";
 import Image from "next/image";
-import { useGetSingleProductDetail } from "@/api-services/products";
-import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { CartInitialState, addToCart } from "@/store/slices/cart";
 import { WishlistInitialState, addToWishlist } from "@/store/slices/wishlist";
+import CustomToast from "../util/CustomToast";
+import BreadCrumb from "./BreadCrumb";
 
-const ProductDisplay = () => {
+const ProductDisplay = (singleProduct: IProduct) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const params = useParams<{ product_id: string }>();
-  const { data: singleProduct } = useGetSingleProductDetail({
-    id: params?.product_id,
-  });
+  const toast = CustomToast();
+
   const cartState = useAppSelector((state) => state.cart as CartInitialState);
   const wishListState = useAppSelector(
     (state) => state.wishlist as WishlistInitialState
@@ -67,6 +68,7 @@ const ProductDisplay = () => {
         (item) => item.id === singleProduct?.id
       ),
       onclick: (item: IProduct) => {
+        toast({ message: "Item added to cart" });
         dispatch(addToCart({ ...item, count: 1 }));
       },
     },
@@ -76,139 +78,167 @@ const ProductDisplay = () => {
     },
   ];
   return (
-    <Box display={"flex"} gap={"1.88rem"} id={`/products/${singleProduct?.id}`}>
-      <Stack spacing={"1.31rem"}>
-        <Box
-          sx={{ width: "31.625rem", flexGrow: 1, bgcolor: "text.light" }}
-          position={"relative"}
-        >
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-          >
-            {singleProduct?.images.map((image, idx) => (
-              <div key={idx}>
-                {Math.abs(activeStep - idx) <= 2 ? (
-                  <Box
-                    component="img"
-                    sx={{
-                      height: "28.125rem",
-                      display: "block",
-                      maxWidth: "31.625rem",
-                      overflow: "hidden",
-                      width: "100%",
-                      objectFit: "cover",
-                    }}
-                    src={image}
-                    alt={singleProduct?.title}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </SwipeableViews>
+    <>
+      <BreadCrumb />
+      <Box
+        display={"flex"}
+        gap={"1.88rem"}
+        id={`/products/${singleProduct?.id}`}
+      >
+        <Stack spacing={"1.31rem"}>
           <Box
-            display={singleProduct?.images?.length! > 1 ? "flex" : "none"}
-            justifyContent={"space-between"}
-            position={"absolute"}
-            top={250}
-            width={"100%"}
-            alignItems={"center"}
+            sx={{ width: "31.625rem", flexGrow: 1, bgcolor: "text.light" }}
+            position={"relative"}
           >
-            <Button
-              onClick={handleNext}
-              disabled={activeStep === singleProduct?.images?.length! - 1}
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
             >
-              <ChevronLeft />
-            </Button>
-            <Button onClick={handleBack} disabled={activeStep === 0}>
-              <ChevronRight />
-            </Button>
-          </Box>
-        </Box>
-        <Stack direction={"row"} spacing={"1.19rem"}>
-          {singleProduct?.images.map((item, idx) => (
+              {singleProduct?.images?.map((image, idx) => (
+                <div key={idx}>
+                  {Math.abs(activeStep - idx) <= 2 ? (
+                    <Box
+                      component="img"
+                      sx={{
+                        height: "28.125rem",
+                        display: "block",
+                        maxWidth: "31.625rem",
+                        overflow: "hidden",
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
+                      src={image}
+                      alt={singleProduct?.title}
+                    />
+                  ) : null}
+                </div>
+              ))}
+            </SwipeableViews>
             <Box
-              key={item}
-              position={"relative"}
-              width={"6.25rem"}
-              height={"4.6875rem"}
-              onClick={() => setActiveStep(idx)}
-              sx={{ cursor: "pointer" }}
+              display={singleProduct?.images?.length! > 1 ? "flex" : "none"}
+              justifyContent={"space-between"}
+              position={"absolute"}
+              top={250}
+              width={"100%"}
+              alignItems={"center"}
             >
-              <Image src={item} alt={""} style={{ objectFit: "cover" }} fill />
+              <Button
+                onClick={handleNext}
+                disabled={activeStep === singleProduct?.images?.length! - 1}
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button onClick={handleBack} disabled={activeStep === 0}>
+                <ChevronRightIcon />
+              </Button>
             </Box>
-          ))}
-        </Stack>
-      </Stack>
-      <Stack spacing={"7.44rem"} minWidth={"27.8125rem"}>
-        <Stack spacing={"1.37rem"}>
-          <Stack spacing={"0.75rem"}>
-            <Typography variant="h4">{singleProduct?.title}</Typography>
-            <Stack direction={"row"} spacing={"0.62rem"}>
-              <Rating
-                name="product-rating"
-                readOnly
-                value={singleProduct?.rating}
-              />
-              <Typography variant="h6" color={"text.secondary"}>
-                10 Reviews
-              </Typography>
-            </Stack>
-          </Stack>
-          <Stack spacing={"0.31rem"}>
-            <Typography variant="h3">${singleProduct?.price}</Typography>
-            <Stack direction={"row"} spacing={"0.31rem"}>
-              <Typography variant="h6" color={"text.secondary"}>
-                Availability :
-              </Typography>
-              <Typography variant="h6" color={"primary.main"}>
-                {singleProduct?.stock! > 0 ? "In Stock" : "Out of stock"}
-              </Typography>
-            </Stack>
-          </Stack>
-        </Stack>
-        <Stack spacing={"4.19rem"}>
-          <Box>
-            <Divider sx={{ width: "100%", marginBottom: "1.81rem" }} />
-            <Stack direction={"row"} spacing={"0.62rem"}>
-              {colors.map((item) => (
-                <Box
-                  key={item}
-                  bgcolor={item}
-                  borderRadius={"50%"}
-                  width={"1.875rem"}
-                  height={"1.875rem"}
+          </Box>
+          <Stack direction={"row"} spacing={"1.19rem"}>
+            {singleProduct?.images?.map((item, idx) => (
+              <Box
+                key={item}
+                position={"relative"}
+                width={"6.25rem"}
+                height={"4.6875rem"}
+                onClick={() => setActiveStep(idx)}
+                sx={{ cursor: "pointer" }}
+              >
+                <Image
+                  src={item}
+                  alt={""}
+                  style={{ objectFit: "cover" }}
+                  fill
                 />
+              </Box>
+            ))}
+          </Stack>
+        </Stack>
+        <Stack spacing={"7.44rem"} minWidth={"27.8125rem"}>
+          <Stack spacing={"1.37rem"}>
+            <Stack spacing={"0.75rem"}>
+              <Typography variant="h4">{singleProduct?.title}</Typography>
+              <Stack direction={"row"} spacing={"0.62rem"}>
+                <Rating
+                  name="product-rating"
+                  readOnly
+                  value={singleProduct?.rating}
+                />
+                <Typography variant="h6" color={"text.secondary"}>
+                  10 Reviews
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack spacing={"0.31rem"}>
+              <Typography variant="h3">${singleProduct?.price}</Typography>
+              <Stack direction={"row"} spacing={"0.31rem"}>
+                <Typography variant="h6" color={"text.secondary"}>
+                  Availability :
+                </Typography>
+                <Typography variant="h6" color={"primary.main"}>
+                  {singleProduct?.stock! > 0 ? "In Stock" : "Out of stock"}
+                </Typography>
+              </Stack>
+            </Stack>
+          </Stack>
+          <Stack spacing={"4.19rem"}>
+            <Box>
+              <Divider sx={{ width: "100%", marginBottom: "1.81rem" }} />
+              <Stack direction={"row"} spacing={"0.62rem"}>
+                {colors.map((item) => (
+                  <Box
+                    key={item}
+                    bgcolor={item}
+                    borderRadius={"50%"}
+                    width={"1.875rem"}
+                    height={"1.875rem"}
+                  />
+                ))}
+              </Stack>
+            </Box>
+            <Stack direction={"row"} alignItems={"center"} spacing={"0.62rem"}>
+              <Button variant="contained" sx={{ width: "max-content" }}>
+                Select Options
+              </Button>
+              {actions.map((item, idx) => (
+                <IconButton
+                  key={idx}
+                  sx={{
+                    width: "2.5rem",
+                    height: "2.5rem",
+                    padding: "0.625rem",
+                    background: "#fff",
+                    border: "1px solid #E8E8E8",
+                    "&::disabled": { cursor: "not-allowed" },
+                  }}
+                  aria-label="add to wish list"
+                  disabled={item?.isDisabled}
+                  onClick={() => singleProduct && item.onclick(singleProduct)}
+                >
+                  {item.icon}
+                </IconButton>
               ))}
             </Stack>
-          </Box>
-          <Stack direction={"row"} alignItems={"center"} spacing={"0.62rem"}>
-            <Button variant="contained" sx={{ width: "max-content" }}>
-              Select Options
-            </Button>
-            {actions.map((item, idx) => (
-              <IconButton
-                key={idx}
-                sx={{
-                  width: "2.5rem",
-                  height: "2.5rem",
-                  padding: "0.625rem",
-                  background: "#fff",
-                  border: "1px solid #E8E8E8",
-                }}
-                aria-label="add to wish list"
-                disabled={item?.isDisabled}
-                onClick={() => singleProduct && item.onclick(singleProduct)}
-              >
-                {item.icon}
-              </IconButton>
-            ))}
           </Stack>
         </Stack>
-      </Stack>
-    </Box>
+        {/* <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={isOpen}
+        onClose={onClose}
+      >
+        <Alert
+          onClose={onClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%", color: "background.light" }}
+        >
+          Item added to list
+        </Alert>
+      </Snackbar> */}
+        ;
+      </Box>
+    </>
   );
 };
 

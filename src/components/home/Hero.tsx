@@ -38,7 +38,7 @@ const ProductItemContent = ({ titleSize }: IProductItemContent) => {
 
 const Hero = () => {
   return (
-    <Box py={"5rem"} sx={{ border: "1px solid red" }}>
+    <Box py={"5rem"}>
       <Grid container spacing={"1rem"}>
         <Grid item xs={12} md={5}>
           <Box bgcolor={"grey.light"} height={"38.5rem"} position={"relative"}>

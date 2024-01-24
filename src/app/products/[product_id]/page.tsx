@@ -12,15 +12,23 @@ import Reddit from "@/components/svgs/Reddit";
 import { useGetSingleProductDetail } from "@/api-services/products";
 import { useParams } from "next/navigation";
 import BestSellerProducts from "@/components/product-detail/BestSellerProducts";
+import Description from "@/components/product-detail/Description";
 
 const ProductDetail = () => {
+  const params = useParams<{ product_id: string }>();
+  const { data: singleProduct } = useGetSingleProductDetail({
+    id: params?.product_id,
+  });
   return (
     <>
       <Box bgcolor={"grey.light"} paddingBottom={"3rem"}>
         <Container maxWidth={"lg"}>
-          <ProductDisplay />
+          <ProductDisplay {...singleProduct} />
         </Container>
       </Box>
+      <Container maxWidth={"lg"}>
+        <Description {...singleProduct} />
+      </Container>
       {/* todo: reuse component from featured products */}
       <Box bgcolor={"grey.light"} paddingY={"3rem"}>
         <Container maxWidth={"lg"}>

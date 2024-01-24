@@ -26,8 +26,8 @@ const services = [
 
 const FeaturedServices = () => {
   return (
-    <Box py={"5rem"} mb={"1rem"} sx={{ border: "1px solid blue" }}>
-      <Stack spacing={"0.62rem"} mb={"5rem"} sx={{ border: "1px solid green" }}>
+    <Box py={"5rem"} mb={"1rem"}>
+      <Stack spacing={"0.62rem"} mb={"5rem"}>
         <Typography
           variant={"h4"}
           textAlign={"center"}
@@ -53,7 +53,6 @@ const FeaturedServices = () => {
         gap={"1.88rem"}
         alignItems={"center"}
         justifyContent={"center"}
-        sx={{ border: "1px solid red" }}
       >
         {services.map((item) => (
           <Box
@@ -62,7 +61,6 @@ const FeaturedServices = () => {
             width={"19.6875rem"}
             paddingY={"2.19rem"}
             paddingX={"2.5rem"}
-            sx={{ border: "1px solid purple" }}
           >
             <Stack
               spacing={"1.25rem"}

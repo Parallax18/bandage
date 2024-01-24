@@ -15,7 +15,6 @@ const CTA = () => {
         <Container
           maxWidth={"lg"}
           sx={{
-            border: "1px solid red",
             paddingTop: "10rem",
             paddingBottom: "7rem",
           }}

@@ -10,7 +10,7 @@ const FeaturedProducts = () => {
   const [limit, setLimit] = useState(10);
   const { data: productsData, isLoading } = useGetAllProducts({ limit });
   return (
-    <Box py={"5rem"} sx={{ border: "1px solid red" }}>
+    <Box py={"5rem"}>
       <Stack spacing={"0.62rem"}>
         <Typography
           variant={"h4"}

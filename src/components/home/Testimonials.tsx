@@ -28,24 +28,13 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <Box paddingY={"5rem"} border={"1px solid yellow"}>
-      <Box
-        display={"flex"}
-        gap={"8rem"}
-        padding={"3rem"}
-        border={"1px solid yellow"}
-        // alignItems={"center"}
-      >
+    <Box paddingY={"5rem"}>
+      <Box display={"flex"} gap={"8rem"} padding={"3rem"}>
         <Box>
           <Typography variant={"h3"} textAlign={"center"} mb={"1.75rem"}>
             What they say about us
           </Typography>
-          <Stack
-            alignItems={"center"}
-            spacing={"1.25rem"}
-            paddingY={"1.88rem"}
-            // paddingX={"2.19rem"}
-          >
+          <Stack alignItems={"center"} spacing={"1.25rem"} paddingY={"1.88rem"}>
             <Avatar
               alt="Regina Miles"
               src={DesignerImage.src}

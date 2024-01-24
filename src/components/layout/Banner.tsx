@@ -13,7 +13,7 @@ const Banner = () => {
     <Box
       paddingX={"1.5rem"}
       height={"3.625rem"}
-      display={"flex"}
+      display={{ xs: "none", md: "flex" }}
       alignItems={"center"}
       bgcolor={"secondary.main"}
       justifyContent={"space-between"}

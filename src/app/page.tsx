@@ -9,7 +9,7 @@ import { Container } from "@mui/material";
 export default function Home() {
   return (
     <>
-      <Container maxWidth={"lg"} sx={{ border: "1px solid red" }}>
+      <Container maxWidth={"lg"}>
         <Hero />
         <FeaturedProducts />
         <FeaturedServices />

@@ -88,6 +88,19 @@ const WishListDrawer = ({ isOpen, onClose }: IWishList) => {
         ) : (
           list()
         )}
+        <Stack
+          padding={"1rem"}
+          borderTop={"1px solid #EBF0EE"}
+          position={"fixed"}
+          bottom={0}
+          width={400}
+          spacing={"1.88rem"}
+          bgcolor={"white"}
+        >
+          <Button variant="contained" fullWidth onClick={() => onClose()}>
+            Close
+          </Button>
+        </Stack>
       </Drawer>
     </div>
   );

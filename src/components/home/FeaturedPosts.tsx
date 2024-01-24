@@ -16,7 +16,7 @@ const posts = [
 
 const FeaturedPosts = () => {
   return (
-    <Box py={"7rem"} sx={{ border: "1px solid red" }}>
+    <Box py={"7rem"}>
       <Stack spacing={"0.62rem"} mb={"5rem"}>
         <Typography variant={"h6"} textAlign={"center"} color={"primary.main"}>
           Practice Advice
