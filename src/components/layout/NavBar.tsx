@@ -184,6 +184,7 @@ export default function NavBar(props: Props) {
             spacing={"1.88rem"}
             alignItems={"center"}
             justifyContent={"center"}
+            paddingTop={"5rem"}
             width={"100vw"}
           >
             {routes.map((item) => (
