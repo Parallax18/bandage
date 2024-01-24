@@ -28,6 +28,7 @@ import { useAppSelector } from "@/store";
 import { CartInitialState } from "@/store/slices/cart";
 import WishListDrawer from "../wishlist/WishlistDrawer";
 import { WishlistInitialState } from "@/store/slices/wishlist";
+import { Collapse } from "@mui/material";
 
 interface Props {
   /**
@@ -195,25 +196,7 @@ export default function NavBar(props: Props) {
         </Toolbar>
       </AppBar>
       <nav>
-        <Drawer
-          container={container}
-          anchor="top"
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: "100%",
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
+        <Collapse in={mobileOpen}>{drawer}</Collapse>
       </nav>
       <CartDrawer isOpen={isOpen} onClose={onClose} />
       <WishListDrawer isOpen={wishlistIsOpen} onClose={closeWishlist} />
