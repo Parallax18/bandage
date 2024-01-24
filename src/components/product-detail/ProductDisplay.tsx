@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
   Snackbar,
+  Alert,
 } from "@mui/material";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
@@ -26,11 +27,13 @@ import { CartInitialState, addToCart } from "@/store/slices/cart";
 import { WishlistInitialState, addToWishlist } from "@/store/slices/wishlist";
 import CustomToast from "../util/CustomToast";
 import BreadCrumb from "./BreadCrumb";
+import { useDisclosure } from "@/utils/use-disclosure";
 
 const ProductDisplay = (singleProduct: IProduct) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const toast = CustomToast();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const cartState = useAppSelector((state) => state.cart as CartInitialState);
   const wishListState = useAppSelector(
@@ -59,6 +62,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
         (item) => item.id === singleProduct?.id
       ),
       onclick: (item: IProduct) => {
+        onOpen();
         dispatch(addToWishlist(item));
       },
     },
@@ -68,7 +72,8 @@ const ProductDisplay = (singleProduct: IProduct) => {
         (item) => item.id === singleProduct?.id
       ),
       onclick: (item: IProduct) => {
-        toast({ message: "Item added to cart" });
+        // toast({ message: "Item added to cart" });
+        onOpen();
         dispatch(addToCart({ ...item, count: 1 }));
       },
     },
@@ -222,21 +227,20 @@ const ProductDisplay = (singleProduct: IProduct) => {
             </Stack>
           </Stack>
         </Stack>
-        {/* <Snackbar
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-        open={isOpen}
-        onClose={onClose}
-      >
-        <Alert
+        <Snackbar
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          open={isOpen}
           onClose={onClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: "100%", color: "background.light" }}
         >
-          Item added to list
-        </Alert>
-      </Snackbar> */}
-        ;
+          <Alert
+            onClose={onClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%", color: "background.light" }}
+          >
+            Item added to list
+          </Alert>
+        </Snackbar>
       </Box>
     </>
   );

@@ -37,7 +37,6 @@ interface Props {
   window?: () => Window;
 }
 
-const drawerWidth = 240;
 // const navItems = ["Home", "About", "Contact"];
 const routes = [
   {
@@ -198,17 +197,18 @@ export default function NavBar(props: Props) {
       <nav>
         <Drawer
           container={container}
+          anchor="top"
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: "100%",
             },
           }}
         >
