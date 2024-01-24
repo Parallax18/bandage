@@ -12,7 +12,7 @@ import {
 
 interface IWishList {
   isOpen: boolean;
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 const WishListDrawer = ({ isOpen, onClose }: IWishList) => {

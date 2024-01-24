@@ -23,11 +23,11 @@ const ProductDetail = () => {
     <>
       <Box bgcolor={"grey.light"} paddingBottom={"3rem"}>
         <Container maxWidth={"lg"}>
-          <ProductDisplay {...singleProduct} />
+          <ProductDisplay {...(singleProduct as IProduct)} />
         </Container>
       </Box>
       <Container maxWidth={"lg"}>
-        <Description {...singleProduct} />
+        <Description {...(singleProduct as IProduct)} />
       </Container>
       {/* todo: reuse component from featured products */}
       <Box bgcolor={"grey.light"} paddingY={"3rem"}>
