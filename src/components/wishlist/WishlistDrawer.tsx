@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import { Button, Stack, Typography, Grid } from "@mui/material";
+import { Button, Stack, Typography, Grid, Collapse } from "@mui/material";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store";
 
@@ -9,6 +9,7 @@ import {
   WishlistInitialState,
   removeFromWishlist,
 } from "@/store/slices/wishlist";
+import { TransitionGroup } from "react-transition-group";
 
 interface IWishList {
   isOpen: boolean;
@@ -29,7 +30,7 @@ const WishListDrawer = ({ isOpen, onClose }: IWishList) => {
       }}
     >
       <Grid container>
-        {wishListState?.items.map((item, index) => (
+        {wishListState?.items.map((item) => (
           <Grid item xs={12} md={6} key={item?.id}>
             <Box width={"100%"} padding={"1rem"} gap={"1rem"}>
               <Image
