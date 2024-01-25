@@ -3,16 +3,9 @@
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import {
   CartIcon,
   HamburgerIcon,
@@ -31,15 +24,6 @@ import { WishlistInitialState } from "@/store/slices/wishlist";
 import { Collapse } from "@mui/material";
 import Nextlink from "next/link";
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
-// const navItems = ["Home", "About", "Contact"];
 const routes = [
   {
     label: "Home",
@@ -67,8 +51,7 @@ const routes = [
   },
 ];
 
-export default function NavBar(props: Props) {
-  const { window } = props;
+export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -83,9 +66,6 @@ export default function NavBar(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -9,6 +9,7 @@ const BreadCrumb = () => {
       direction={"row"}
       spacing={"0.94rem"}
       justifyContent={{ xs: "center", md: "flex-start" }}
+      alignItems={"center"}
     >
       <Link href={"/"} color={"text.primary"}>
         Home
