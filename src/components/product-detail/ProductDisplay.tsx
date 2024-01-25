@@ -9,6 +9,7 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Skeleton,
 } from "@mui/material";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
@@ -28,6 +29,7 @@ import { WishlistInitialState, addToWishlist } from "@/store/slices/wishlist";
 import CustomToast from "../util/CustomToast";
 import BreadCrumb from "./BreadCrumb";
 import { useDisclosure } from "@/utils/use-disclosure";
+import LoaderItem from "../util/LoaderItem";
 
 const ProductDisplay = (singleProduct: IProduct) => {
   const theme = useTheme();
@@ -95,50 +97,52 @@ const ProductDisplay = (singleProduct: IProduct) => {
             sx={{ width: "31.625rem", flexGrow: 1, bgcolor: "text.light" }}
             position={"relative"}
           >
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              onChangeIndex={handleStepChange}
-              enableMouseEvents
-            >
-              {singleProduct?.images?.map((image, idx) => (
-                <div key={idx}>
-                  {Math.abs(activeStep - idx) <= 2 ? (
-                    <Box
-                      component="img"
-                      sx={{
-                        height: "28.125rem",
-                        display: "block",
-                        maxWidth: "31.625rem",
-                        overflow: "hidden",
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                      src={image}
-                      alt={singleProduct?.title}
-                    />
-                  ) : null}
-                </div>
-              ))}
-            </SwipeableViews>
-            <Box
-              display={singleProduct?.images?.length! > 1 ? "flex" : "none"}
-              justifyContent={"space-between"}
-              position={"absolute"}
-              top={250}
-              width={"100%"}
-              alignItems={"center"}
-            >
-              <Button
-                onClick={handleNext}
-                disabled={activeStep === singleProduct?.images?.length! - 1}
+            <LoaderItem isLoading={true}>
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
               >
-                <ChevronLeftIcon fill={"#fff"} />
-              </Button>
-              <Button onClick={handleBack} disabled={activeStep === 0}>
-                <ChevronRightIcon fill={"#fff"} />
-              </Button>
-            </Box>
+                {singleProduct?.images?.map((image, idx) => (
+                  <div key={idx}>
+                    {Math.abs(activeStep - idx) <= 2 ? (
+                      <Box
+                        component="img"
+                        sx={{
+                          height: "28.125rem",
+                          display: "block",
+                          maxWidth: "31.625rem",
+                          overflow: "hidden",
+                          width: "100%",
+                          objectFit: "cover",
+                        }}
+                        src={image}
+                        alt={singleProduct?.title}
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </SwipeableViews>
+              <Box
+                display={singleProduct?.images?.length! > 1 ? "flex" : "none"}
+                justifyContent={"space-between"}
+                position={"absolute"}
+                top={250}
+                width={"100%"}
+                alignItems={"center"}
+              >
+                <Button
+                  onClick={handleNext}
+                  disabled={activeStep === singleProduct?.images?.length! - 1}
+                >
+                  <ChevronLeftIcon fill={"#fff"} />
+                </Button>
+                <Button onClick={handleBack} disabled={activeStep === 0}>
+                  <ChevronRightIcon fill={"#fff"} />
+                </Button>
+              </Box>
+            </LoaderItem>
           </Box>
           <Stack direction={"row"} spacing={"1.19rem"}>
             {singleProduct?.images?.map((item, idx) => (
@@ -150,12 +154,14 @@ const ProductDisplay = (singleProduct: IProduct) => {
                 onClick={() => setActiveStep(idx)}
                 sx={{ cursor: "pointer" }}
               >
-                <Image
-                  src={item}
-                  alt={""}
-                  style={{ objectFit: "cover" }}
-                  fill
-                />
+                <LoaderItem isLoading={true}>
+                  <Image
+                    src={item}
+                    alt={""}
+                    style={{ objectFit: "cover" }}
+                    fill
+                  />
+                </LoaderItem>
               </Box>
             ))}
           </Stack>
@@ -163,27 +169,41 @@ const ProductDisplay = (singleProduct: IProduct) => {
         <Stack spacing={"7.44rem"} minWidth={"27.8125rem"}>
           <Stack spacing={"1.37rem"}>
             <Stack spacing={"0.75rem"}>
-              <Typography variant="h4">{singleProduct?.title}</Typography>
+              <LoaderItem isLoading={true}>
+                <Typography variant="h4">{singleProduct?.title}</Typography>
+              </LoaderItem>
+
               <Stack direction={"row"} spacing={"0.62rem"}>
-                <Rating
-                  name="product-rating"
-                  readOnly
-                  value={singleProduct?.rating}
-                />
-                <Typography variant="h6" color={"text.secondary"}>
-                  10 Reviews
-                </Typography>
+                <LoaderItem isLoading={true}>
+                  <Rating
+                    name="product-rating"
+                    readOnly
+                    value={singleProduct?.rating}
+                  />
+                </LoaderItem>
+                <LoaderItem isLoading={true}>
+                  <Typography variant="h6" color={"text.secondary"}>
+                    10 Reviews
+                  </Typography>
+                </LoaderItem>
               </Stack>
             </Stack>
             <Stack spacing={"0.31rem"}>
-              <Typography variant="h3">${singleProduct?.price}</Typography>
+              <LoaderItem isLoading={true}>
+                <Typography variant="h3">${singleProduct?.price}</Typography>
+              </LoaderItem>
               <Stack direction={"row"} spacing={"0.31rem"}>
-                <Typography variant="h6" color={"text.secondary"}>
-                  Availability :
-                </Typography>
-                <Typography variant="h6" color={"primary.main"}>
-                  {singleProduct?.stock! > 0 ? "In Stock" : "Out of stock"}
-                </Typography>
+                <LoaderItem isLoading={true}>
+                  <Typography variant="h6" color={"text.secondary"}>
+                    Availability :
+                  </Typography>{" "}
+                </LoaderItem>
+
+                <LoaderItem isLoading={true}>
+                  <Typography variant="h6" color={"primary.main"}>
+                    {singleProduct?.stock! > 0 ? "In Stock" : "Out of stock"}
+                  </Typography>
+                </LoaderItem>
               </Stack>
             </Stack>
           </Stack>

@@ -1,5 +1,5 @@
 import { IconProps, SvgIcon } from "@mui/material";
-import React, { SVGAttributes } from "react";
+import React from "react";
 
 interface ICustomIconProps extends IconProps {
   fill?: string;
