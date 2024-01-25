@@ -3,9 +3,15 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { Button, Stack, Typography, Divider, IconButton } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  Divider,
+  IconButton,
+  Collapse,
+} from "@mui/material";
 import Image from "next/image";
-import { FeaturedPostImageOne } from "@/assets";
 import SubtractIcon from "../svgs/SubtractIcon";
 import { AdditionIcon } from "../svgs";
 import { useAppDispatch, useAppSelector } from "@/store";
@@ -15,6 +21,7 @@ import {
   increaseItemQuantity,
   removeFromCart,
 } from "@/store/slices/cart";
+import { TransitionGroup } from "react-transition-group";
 
 interface ICartDrawer {
   isOpen: boolean;
@@ -33,68 +40,77 @@ const CartDrawer = ({ isOpen, onClose }: ICartDrawer) => {
       }}
     >
       <List>
-        {cartState?.items.map((item, index) => (
-          <ListItem key={item?.id} disablePadding>
-            <Box display={"flex"} width={"100%"} padding={"1rem"} gap={"1rem"}>
-              <Image
-                src={item?.thumbnail}
-                style={{ objectFit: "cover" }}
-                width={70}
-                height={80}
-                alt=""
-              />
-              <Stack
-                justifyContent={"space-between"}
-                width={"100%"}
-                spacing={1}
-              >
-                <Stack>
-                  <Typography>{item?.title}</Typography>
-                </Stack>
+        <TransitionGroup>
+          {cartState?.items.map((item) => (
+            <Collapse key={item.id}>
+              <ListItem disablePadding>
                 <Box
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                  width={"100%"}
                   display={"flex"}
+                  width={"100%"}
+                  padding={"1rem"}
+                  gap={"1rem"}
                 >
+                  <Image
+                    src={item?.thumbnail}
+                    style={{ objectFit: "cover" }}
+                    width={70}
+                    height={80}
+                    alt=""
+                  />
                   <Stack
+                    justifyContent={"space-between"}
+                    width={"100%"}
                     spacing={1}
-                    direction={"row"}
-                    display={"flex"}
-                    alignItems={"center"}
                   >
-                    <IconButton
-                      disabled={item?.count === 1}
-                      onClick={() => dispatch(decreaseItemQuantity(item))}
+                    <Stack>
+                      <Typography>{item?.title}</Typography>
+                    </Stack>
+                    <Box
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                      width={"100%"}
+                      display={"flex"}
                     >
-                      <SubtractIcon />
-                    </IconButton>
+                      <Stack
+                        spacing={1}
+                        direction={"row"}
+                        display={"flex"}
+                        alignItems={"center"}
+                      >
+                        <IconButton
+                          disabled={item?.count === 1}
+                          onClick={() => dispatch(decreaseItemQuantity(item))}
+                        >
+                          <SubtractIcon />
+                        </IconButton>
 
-                    <Typography>{item?.count}</Typography>
-                    <IconButton
-                      onClick={() => dispatch(increaseItemQuantity(item))}
-                    >
-                      <AdditionIcon />
-                    </IconButton>
+                        <Typography>{item?.count}</Typography>
+                        <IconButton
+                          onClick={() => dispatch(increaseItemQuantity(item))}
+                        >
+                          <AdditionIcon />
+                        </IconButton>
+                      </Stack>
+                      <Button
+                        variant="text"
+                        sx={{
+                          color: "danger.main",
+                          fontSize: "0.825rem",
+                          padding: 0,
+                          height: "max-content",
+                        }}
+                        onClick={() => dispatch(removeFromCart(item))}
+                      >
+                        Remove
+                      </Button>
+                    </Box>
                   </Stack>
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "danger.main",
-                      fontSize: "0.825rem",
-                      padding: 0,
-                      height: "max-content",
-                    }}
-                    onClick={() => dispatch(removeFromCart(item))}
-                  >
-                    Remove
-                  </Button>
                 </Box>
-              </Stack>
-            </Box>
-            <Divider />
-          </ListItem>
-        ))}
+                <Divider />
+              </ListItem>
+            </Collapse>
+          ))}
+        </TransitionGroup>
       </List>
     </Box>
   );
