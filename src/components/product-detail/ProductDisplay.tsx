@@ -31,7 +31,11 @@ import BreadCrumb from "./BreadCrumb";
 import { useDisclosure } from "@/utils/use-disclosure";
 import LoaderItem from "../util/LoaderItem";
 
-const ProductDisplay = (singleProduct: IProduct) => {
+interface IProductDisplay extends IProduct {
+  isLoading: boolean;
+}
+
+const ProductDisplay = (props: IProductDisplay) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const toast = CustomToast();
@@ -60,9 +64,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
   const actions = [
     {
       icon: <WishlistIcon />,
-      isDisabled: wishListState?.items.some(
-        (item) => item.id === singleProduct?.id
-      ),
+      isDisabled: wishListState?.items.some((item) => item.id === props?.id),
       onclick: (item: IProduct) => {
         onOpen();
         dispatch(addToWishlist(item));
@@ -70,9 +72,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
     },
     {
       icon: <CartIcon fill={"#252B42"} />,
-      isDisabled: cartState?.items.some(
-        (item) => item.id === singleProduct?.id
-      ),
+      isDisabled: cartState?.items.some((item) => item.id === props?.id),
       onclick: (item: IProduct) => {
         // toast({ message: "Item added to cart" });
         onOpen();
@@ -87,24 +87,20 @@ const ProductDisplay = (singleProduct: IProduct) => {
   return (
     <>
       <BreadCrumb />
-      <Box
-        display={"flex"}
-        gap={"1.88rem"}
-        id={`/products/${singleProduct?.id}`}
-      >
+      <Box display={"flex"} gap={"1.88rem"} id={`/products/${props?.id}`}>
         <Stack spacing={"1.31rem"}>
           <Box
             sx={{ width: "31.625rem", flexGrow: 1, bgcolor: "text.light" }}
             position={"relative"}
           >
-            <LoaderItem isLoading={true}>
+            <LoaderItem isLoading={props.isLoading}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
               >
-                {singleProduct?.images?.map((image, idx) => (
+                {props?.images?.map((image, idx) => (
                   <div key={idx}>
                     {Math.abs(activeStep - idx) <= 2 ? (
                       <Box
@@ -118,14 +114,14 @@ const ProductDisplay = (singleProduct: IProduct) => {
                           objectFit: "cover",
                         }}
                         src={image}
-                        alt={singleProduct?.title}
+                        alt={props?.title}
                       />
                     ) : null}
                   </div>
                 ))}
               </SwipeableViews>
               <Box
-                display={singleProduct?.images?.length! > 1 ? "flex" : "none"}
+                display={props?.images?.length! > 1 ? "flex" : "none"}
                 justifyContent={"space-between"}
                 position={"absolute"}
                 top={250}
@@ -134,7 +130,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
               >
                 <Button
                   onClick={handleNext}
-                  disabled={activeStep === singleProduct?.images?.length! - 1}
+                  disabled={activeStep === props?.images?.length! - 1}
                 >
                   <ChevronLeftIcon fill={"#fff"} />
                 </Button>
@@ -145,7 +141,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
             </LoaderItem>
           </Box>
           <Stack direction={"row"} spacing={"1.19rem"}>
-            {singleProduct?.images?.map((item, idx) => (
+            {props?.images?.map((item, idx) => (
               <Box
                 key={item}
                 position={"relative"}
@@ -154,7 +150,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
                 onClick={() => setActiveStep(idx)}
                 sx={{ cursor: "pointer" }}
               >
-                <LoaderItem isLoading={true}>
+                <LoaderItem isLoading={props.isLoading}>
                   <Image
                     src={item}
                     alt={""}
@@ -169,19 +165,19 @@ const ProductDisplay = (singleProduct: IProduct) => {
         <Stack spacing={"7.44rem"} minWidth={"27.8125rem"}>
           <Stack spacing={"1.37rem"}>
             <Stack spacing={"0.75rem"}>
-              <LoaderItem isLoading={true}>
-                <Typography variant="h4">{singleProduct?.title}</Typography>
+              <LoaderItem isLoading={props.isLoading}>
+                <Typography variant="h4">{props?.title}</Typography>
               </LoaderItem>
 
               <Stack direction={"row"} spacing={"0.62rem"}>
-                <LoaderItem isLoading={true}>
+                <LoaderItem isLoading={props.isLoading}>
                   <Rating
                     name="product-rating"
                     readOnly
-                    value={singleProduct?.rating}
+                    value={props?.rating}
                   />
                 </LoaderItem>
-                <LoaderItem isLoading={true}>
+                <LoaderItem isLoading={props.isLoading}>
                   <Typography variant="h6" color={"text.secondary"}>
                     10 Reviews
                   </Typography>
@@ -189,19 +185,19 @@ const ProductDisplay = (singleProduct: IProduct) => {
               </Stack>
             </Stack>
             <Stack spacing={"0.31rem"}>
-              <LoaderItem isLoading={true}>
-                <Typography variant="h3">${singleProduct?.price}</Typography>
+              <LoaderItem isLoading={props.isLoading}>
+                <Typography variant="h3">${props?.price}</Typography>
               </LoaderItem>
               <Stack direction={"row"} spacing={"0.31rem"}>
-                <LoaderItem isLoading={true}>
+                <LoaderItem isLoading={props.isLoading}>
                   <Typography variant="h6" color={"text.secondary"}>
                     Availability :
                   </Typography>{" "}
                 </LoaderItem>
 
-                <LoaderItem isLoading={true}>
+                <LoaderItem isLoading={props.isLoading}>
                   <Typography variant="h6" color={"primary.main"}>
-                    {singleProduct?.stock! > 0 ? "In Stock" : "Out of stock"}
+                    {props?.stock! > 0 ? "In Stock" : "Out of stock"}
                   </Typography>
                 </LoaderItem>
               </Stack>
@@ -239,7 +235,7 @@ const ProductDisplay = (singleProduct: IProduct) => {
                   }}
                   aria-label="add to wish list"
                   disabled={item?.isDisabled}
-                  onClick={() => singleProduct && item.onclick(singleProduct)}
+                  onClick={() => props && item.onclick(props)}
                 >
                   {item.icon}
                 </IconButton>

@@ -16,18 +16,21 @@ import Description from "@/components/product-detail/Description";
 
 const ProductDetail = () => {
   const params = useParams<{ product_id: string }>();
-  const { data: singleProduct } = useGetSingleProductDetail({
+  const { data: singleProduct, isLoading } = useGetSingleProductDetail({
     id: params?.product_id,
   });
   return (
     <>
       <Box bgcolor={"grey.light"} paddingBottom={"3rem"}>
         <Container maxWidth={"lg"}>
-          <ProductDisplay {...(singleProduct as IProduct)} />
+          <ProductDisplay
+            {...(singleProduct as IProduct)}
+            isLoading={isLoading}
+          />
         </Container>
       </Box>
       <Container maxWidth={"lg"}>
-        <Description {...(singleProduct as IProduct)} />
+        <Description {...(singleProduct as IProduct)} isLoading={isLoading} />
       </Container>
       {/* todo: reuse component from featured products */}
       <Box bgcolor={"grey.light"} paddingY={"3rem"}>
