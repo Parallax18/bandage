@@ -30,7 +30,7 @@ const ProductDetail = () => {
         </Container>
       </Box>
       <Container maxWidth={"lg"}>
-        <Description {...(singleProduct as IProduct)} isLoading={isLoading} />
+        <Description {...(singleProduct as IProduct)} />
       </Container>
       {/* todo: reuse component from featured products */}
       <Box bgcolor={"grey.light"} paddingY={"3rem"}>
