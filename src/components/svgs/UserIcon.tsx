@@ -3,7 +3,8 @@ import React from "react";
 
 const UserIcon = (props: IconProps) => {
   const customSizing = {
-    small: "16px",
+    small: "14px",
+    medium: "16px",
     large: "74px",
   };
   return (
